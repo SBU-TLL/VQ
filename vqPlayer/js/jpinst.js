@@ -1261,11 +1261,13 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 					}
 				}
 		}
-		var newHTML= hasQuestionText+"You've watched " + watchPct + "% of the video." + (watchPct >= 80 ? "" : "");
+		/*
+ 		var newHTML= hasQuestionText+"You've watched " + watchPct + "% of the video." + (watchPct >= 80 ? "" : "");
 		var prevHTML=$("#noQuestionText").html();
 		if(newHTML!==prevHTML){
 			$("#noQuestionText").html(hasQuestionText+"You've watched " + watchPct + "% of the video." + (watchPct >= 80 ? "" : ""));
 		}
+	*/
 	}
 
 	function seekTimeUpdate() {	// Called by 1 function: loadButtons()
@@ -1358,7 +1360,7 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 						text=`<div style="color:red">Error submitting to Grade!</div>`;
 						setTimeout(()=>{
 						location.reload
-						window.parent.location.reload()
+						//window.parent.location.reload()
 						},2000);
 						 	
 						}
