@@ -1,0 +1,9 @@
+# Enable the rewrite engine
+RewriteEngine On
+
+# Set the base for this subdirectory
+RewriteBase /vqDev/
+
+# When a request for ".../vq/anything" is made inside the /vqDev/ directory,
+# redirect it to "/vqDev/anything"
+RewriteRule ^vq/(.*)$ /vqDev/$1 [R=301,NC,L]
