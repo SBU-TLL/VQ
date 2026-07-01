@@ -57,6 +57,7 @@ $(document).ready(function () {
 						resizeWindow();
 						}, 800);
 				});
+		setupAccessibility();
 		});
 
 function checkForLTI()
@@ -556,9 +557,9 @@ function betterParseInt(s) {	// Called by 0 functions:
 
 function prepQuestionScreen() {	// Called by 1 function: loadButtons()
 	for (var i = 0; i < 6; i++) {
-		$("#questionBoxContents").append("<div id='answerBox" + i + "' class='answerBox text fs-20'></div>");
-		$("#answerBox" + i).append("<div id='answerIcon" + i + "' class='answerIcon btn'></div>");
-		$("#answerBox" + i).append("<div id='answerText" + i + "' class='answerText'></div>");
+		$("#questionBoxContents").append("<div id='answerBox" + i + "' class='answerBox text fs-20' role='button' tabindex='0' aria-label='Answer option " + (i + 1) + "'></div>");
+		$("#answerBox" + i).append("<div id='answerIcon" + i + "' class='answerIcon btn' role='img' aria-hidden='true'></div>");
+		$("#answerBox" + i).append("<div id='answerText" + i + "' class='answerText' aria-hidden='true'></div>");
 		$("#answerBox" + i).css("top", (37.5 + 10 * i) + "%");
 		initAnswerClickEvent(i);
 	}
@@ -569,8 +570,10 @@ function prepQuestionScreen() {	// Called by 1 function: loadButtons()
 	resizeWindow();
 }
 
-function initAnswerClickEvent(i) {	// Called by 1 function: prepQuestionScreen()
-	$("#answerBox" + i+" div").click(function () {
+	function initAnswerClickEvent(i) { // Called by 1 function: prepQuestionScreen()
+		$("#answerBox" + i).on("click keydown", function (e) {
+            if (e.type === "keydown" && e.key !== "Enter" && e.key !== " ") return;
+            if (e.type === "keydown" && e.key === " ") e.preventDefault();
 			selectAnswer(i);
 			});
 }
@@ -1109,20 +1112,22 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 			answerData.push(questionAnswerData);
 
 			// Question button
-			$("#buttonBank").append("<div id='questionButton" + i + "' class='questionButton'></div>");
-			$("#questionButton" + i).append("<div id='questionButtonText" + i + "' class='questionButtonText text fs-30'>" + (i + 1) + "</div>");
-			$("#questionButton" + i).append("<div id='questionButtonIcon" + i + "' class='questionButtonIcon'></div>");
+			$("#buttonBank").append("<div id='questionButton" + i + "' class='questionButton' role='button' tabindex='0' aria-label='Question " + (i + 1) + "'></div>");
+			$("#questionButton" + i).append("<div id='questionButtonText" + i + "' class='questionButtonText text fs-30' aria-hidden='true'>" + (i + 1) + "</div>");
+			$("#questionButton" + i).append("<div id='questionButtonIcon" + i + "' class='questionButtonIcon' role='img' aria-hidden='true'></div>");
 			$("#questionButton" + i).css("left", (50.9375 - 2.5 * qCount + 5 * i) + "%");
 			initQuestionClickEvent(i);
 			// Question marker on the timeline
-			$("#questionMarkers").append("<div id='questionMarker" + i + "' class='questionMarker'></div>")
-				$("#questionMarker" + i).append("<div id='questionMarkerText" + i + "' class='questionMarkerText text fs-18'>" + (i + 1) + "</div>");
+			$("#questionMarkers").append("<div id='questionMarker" + i + "' class='questionMarker' role='presentation'></div>")
+				$("#questionMarker" + i).append("<div id='questionMarkerText" + i + "' class='questionMarkerText text fs-18' aria-hidden='true'>" + (i + 1) + "</div>");
 		}
 		resizeWindow();
 	}
 
 	function initQuestionClickEvent(i) {	// Called by 1 function: makeQuestionButtons()
-		$("#questionButton" + i).click(function () {
+		$("#questionButton" + i).on("click keydown", function (e) {
+			if (e.type === "keydown" && e.key !== "Enter" && e.key !== " ") return;
+			if (e.type === "keydown" && e.key === " ") e.preventDefault();
 				if (!userData.answerData[i].correct && !disableClicks) {
 				setQuestion(i);
 				recordTimeWatched();
@@ -1457,6 +1462,37 @@ function hideQuestions() {	// Called by 1 function: loadButtons()
 			playPause();
 		}
 	}
+}
+
+function setupAccessibility() {
+    // Basic structural roles
+    $("#quizBank").attr({ "role": "main", "aria-labelledby": "questionText" });
+    $("#videoControls").attr({ "role": "navigation", "aria-label": "Video Controls" });
+    $("#scoreBox").attr({ "role": "complementary" });
+    $("#scoreBubble").attr({ "aria-live": "polite", "aria-atomic": "true" });
+    $("#expoBox").attr({ "role": "alert", "aria-live": "polite" });
+    
+    // Video player
+    $("#videoBox").attr("aria-label", "Video Player");
+    
+    // Static buttons ARIA
+    $("#videoPlayPause").attr({ "role": "button", "tabindex": "0", "aria-label": "Play or Pause Video" });
+    $("#videoSkip").attr({ "role": "button", "tabindex": "0", "aria-label": "Skip" });
+    $("#muteButton").attr({ "role": "button", "tabindex": "0", "aria-label": "Mute or Unmute Audio" });
+    $("#cc").attr({ "role": "button", "tabindex": "0", "aria-label": "Toggle Closed Captions" });
+    $("#bigPlay").attr({ "role": "button", "tabindex": "0", "aria-label": "Play Video" });
+    
+    // Sliders
+    $("#seekSlider").attr("aria-label", "Video Position");
+    $("#volumeSlider").attr("aria-label", "Volume");
+    
+    // Add generic keydown handler to all roles=button to trigger click on Enter/Space
+    $(document).on("keydown", '[role="button"], [tabindex="0"]', function(e) {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            $(this).click();
+        }
+    });
 }
 
 function loadLocalData() {	// Called by 1 function: loadButtons()
