@@ -46,7 +46,7 @@ header("Location: /shib/?shibtarget=$target");
 
 </head>
 
-<body>
+<body role="document">
 <div id="stageCover">
 <div id="coverTop" class="cover stripes"></div>
 <div id="coverBottom" class="cover stripes"></div>
