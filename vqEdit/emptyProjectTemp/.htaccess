@@ -1,11 +1,20 @@
-AuthType shibboleth
-ShibRequestSetting requireSession 1
-require valid-user
+<IfModule mod_shib>
+    AuthType shibboleth
+</IfModule>
+<IfModule mod_shib>
+    ShibRequestSetting requireSession 1
+</IfModule>
+<IfModule mod_shib>
+    require valid-user
+</IfModule>
 RewriteEngine On
 RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 #For now, we comment out that we require our visitor be a student of stony brook university.
- require affiliation student@stonybrook.edu
+<IfModule mod_shib>
+    require affiliation student@stonybrook.edu
+</IfModule>
  DirectoryIndex index.html
 # RewriteCond %{HTTPS} !=on [NC]
 # RewriteRule ^stocki(.*) https://%{HTTP_HOST}%{REQUEST_URI}

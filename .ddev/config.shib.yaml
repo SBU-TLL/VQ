@@ -1,0 +1,30 @@
+# DDEV override: local-dev Shibboleth auth simulation for VQ.
+# Lives under .ddev/ — never deployed. The mock (.ddev/php/shib_dev_prepend.php)
+# is gated on ENVIRONMENT/APP_ENV; anything but local/dev is a no-op (fail-closed).
+# MOCK_* seed the Shibboleth attributes the app reads (cn=netID, mail, givenName,
+# nickname, sn). Change MOCK_CN to test as a different author/consumer.
+web_environment:
+  - ENVIRONMENT=local
+  - APP_ENV=local
+  - MOCK_CN=teststudent
+  - MOCK_MAIL=teststudent@stonybrook.edu
+  - MOCK_GIVENNAME=Test
+  - MOCK_NICKNAME=Test
+  - MOCK_SN=Student
+
+# The app is deployed in production under a "/vq/" path prefix
+# (apps.tlt.stonybrook.edu/vq/) and hardcodes absolute asset URLs like
+# /vq/vqPlayer/js/jpinst.js. DDEV serves at the domain root, so those 404.
+# Recreate a self-referential "vq -> ." symlink on every start so the app is
+# reachable at https://vq.ddev.site/vq/ (matching prod URLs). Dev-only &
+# gitignored — NOT committed, because a self-loop symlink can make naive
+# directory walkers (rsync/tar/find in the Ansible→Azure deploy) recurse.
+hooks:
+  post-start:
+    - exec: ln -sfn . /var/www/html/vq
+
+# NOTE: vqPlayer/emptyProject/.htaccess hardcodes a production session.save_path
+# (/home/tltsecure/...) via `SetEnv PHP_VALUE`, which php-fpm honors. That path
+# doesn't exist locally, so that one template dir emits a cosmetic session_start()
+# warning (page still loads). Fixing it (make the path relative/env-driven) is a
+# portability task for the Azure migration — not worked around here.

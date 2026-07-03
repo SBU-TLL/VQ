@@ -1,0 +1,33 @@
+# === Secrets / local env (never commit real ones) ===
+.env
+.env.*
+!.env.example
+
+# === PHP sessions (should never be committed; perry branch had these) ===
+sess_*
+**/sess_*
+
+# === macOS junk ===
+.DS_Store
+**/.DS_Store
+._*
+**/._*
+
+# === Dependencies / build ===
+/vendor/
+**/node_modules/
+package-lock.json
+
+# === Editor / tooling ===
+.vscode/
+.cursor/
+.idea/
+*.swp
+
+# === App runtime state ===
+# The file-based "DB" lives under users/ (already has its own .gitignore that
+# ignores everything but .gitignore). Per-project cache dirs:
+**/cache/
+
+# Dev-only /vq path-prefix symlink (recreated by DDEV post-start hook; see config.shib.yaml)
+/vq
