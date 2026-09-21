@@ -64,7 +64,7 @@ header("Location: /shib/?shibtarget=$target");
 <!--<track src='media/video.vtt'>-->
 <!--<track default>-->
 </video>
-<div id='bigPlay' class='playState'></div>	<!-- Tony -->
+<button type="button" id="bigPlay" class="playState" aria-label="Play video"></button>	<!-- Tony -->
 </div>
 <div id="quizTitle" class="text fs-26"></div>
 <div id="toggleQuestionBox" class="rounded">
@@ -72,18 +72,18 @@ header("Location: /shib/?shibtarget=$target");
 <div id="toggleQuestionText" class="text fs-18">Show/Hide Questions</div>
 </div>
 <div id="bblink"></div>
-<div id="resetQuestionButton" class="btn"></div>
+<button type="button" id="resetQuestionButton" class="btn" aria-label="Reset questions"></button>
 <div id="resetQuestionBox" class="rounded">
 <div id="resetQuestionBG"></div>
 <div id="resetQuestionText" class="text fs-18">Reset Questions</div>
 </div>
-<div id="videoSkip"></div>
+<button type="button" id="videoSkip" aria-label="Skip to unwatched sections"></button>
 <div id="videoSkipBox" class="rounded">
 <div id="videoSkipBG"></div>
 <div id="videoSkipText" class="text fs-18">Skip to Unwatched Sections</div>
 </div>
 
-<div id="userInfoButton"></div>
+<button type="button" id="userInfoButton" aria-label="Show account information"></button>
 <div id="userInfoBox" class="rounded">
 <div id="userInfoBG"></div>
 <div id="userInfoLogin" class="text fs-14">Signed in as [name].</div>
@@ -128,38 +128,38 @@ The maximum score is 2000 points.
 <div id="expoTitle" class="text fs-60">Correct</div>
 <div id="expoText" class="text fs-30"></div>
 <div id="expoButtons">
-<div id="expoButtonReview" class="expoButton rounded" role="button" tabindex="0" aria-label="Review question">
-<div class="expoButtonText text fs-30">Review</div>
-</div>
-<div id="expoButtonRetry" class="expoButton rounded" role="button" tabindex="0" aria-label="Retry question">
-<div class="expoButtonText text fs-30">Retry</div>
-</div>
-<div id="expoButtonContinue" class="expoButton rounded" role="button" tabindex="0" aria-label="Continue video">
-<div class="expoButtonText text fs-30">Continue</div>
-</div>
-</div>
-</div>
-<div id="hideQuestionButton" class="btn">
-<div id="hideQuestionButtonLabel">
-<div id="hideQuestionButtonBG" class="rounded"></div>
-<div id="hideQuestionButtonText" class="text fs-18">Show Video</div>
+<button type="button" id="expoButtonReview" class="expoButton rounded" aria-label="Review question">
+<span class="expoButtonText text fs-30">Review</span>
+</button>
+<button type="button" id="expoButtonRetry" class="expoButton rounded" aria-label="Retry question">
+<span class="expoButtonText text fs-30">Retry</span>
+</button>
+<button type="button" id="expoButtonContinue" class="expoButton rounded" aria-label="Continue video">
+<span class="expoButtonText text fs-30">Continue</span>
+</button>
 </div>
 </div>
+<button type="button" id="hideQuestionButton" class="btn" aria-label="Show video">
+<span id="hideQuestionButtonLabel">
+<span id="hideQuestionButtonBG" class="rounded"></span>
+<span id="hideQuestionButtonText" class="text fs-18">Show Video</span>
+</span>
+</button>
 </div>
 </div>
 </div>
 <div id="smallQuestionBox">
 <div id="smallQuestionBoxBG"></div>
 <div id="smallQuestionText" class="text fs-35"></div>
-<div id="showQuestionButton" class="btn">
-<div id="showQuestionButtonLabel">
-<div id="showQuestionButtonBG" class="rounded"></div>
-<div id="showQuestionButtonText" class="text fs-17">Hide Video</div>
-</div>
-</div>
+<button type="button" id="showQuestionButton" class="btn" aria-label="Hide video">
+<span id="showQuestionButtonLabel">
+<span id="showQuestionButtonBG" class="rounded"></span>
+<span id="showQuestionButtonText" class="text fs-17">Hide Video</span>
+</span>
+</button>
 </div>
 <div id="videoControls">
-<div id="videoPlayPause" class="playPause playState btn"></div>
+<button type="button" id="videoPlayPause" class="playPause playState btn" aria-label="Play or pause video"></button>
 <input id="seekSlider" type="range" min="0" max="100" value="0" step="0.05">
 <div id="seekSliderBG" class="fakeSlider">
 <div id="seekSliderTrack">
@@ -169,7 +169,7 @@ The maximum score is 2000 points.
 
 <div id="questionMarkers"></div>
 
-<div id="toggleQuestionButton" class="btn"></div>
+<button type="button" id="toggleQuestionButton" class="btn" aria-label="Show or hide questions"></button>
 <div id="timeDisplay">
 <div id="timeDisplayText" class="text fs-23"></div>
 <select id="playbackSpeed" class="text fs-15">
@@ -183,10 +183,10 @@ The maximum score is 2000 points.
 <option value="2">2x</option>
 </select>
 </div>
-<div id='cc' class = 'on btn'></div> <!-- Tony -->
+<button type="button" id="cc" class="on btn" aria-label="Toggle captions"></button> <!-- Tony -->
 <div id='repair'  class='text'>repair</div>
 <div id="repairBox"><form action="#"><textarea></textarea><input type="hidden"  id="startTime"/><input type="submit" value="ok"></input><form></div>
-<div id="muteButton" class="btn muteOff"></div>
+<button type="button" id="muteButton" class="btn muteOff" aria-label="Mute or unmute audio"></button>
 <input id="volumeSlider" type="range" min="0" max="100" value="100" step="1">
 <div id="volumeSliderBG" class="fakeSlider">
 <div id="volumeSliderTrack">
