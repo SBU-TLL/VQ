@@ -128,13 +128,13 @@ The maximum score is 2000 points.
 <div id="expoTitle" class="text fs-60">Correct</div>
 <div id="expoText" class="text fs-30"></div>
 <div id="expoButtons">
-<div id="expoButtonReview" class="expoButton rounded">
+<div id="expoButtonReview" class="expoButton rounded" role="button" tabindex="0" aria-label="Review question">
 <div class="expoButtonText text fs-30">Review</div>
 </div>
-<div id="expoButtonRetry" class="expoButton rounded">
+<div id="expoButtonRetry" class="expoButton rounded" role="button" tabindex="0" aria-label="Retry question">
 <div class="expoButtonText text fs-30">Retry</div>
 </div>
-<div id="expoButtonContinue" class="expoButton rounded">
+<div id="expoButtonContinue" class="expoButton rounded" role="button" tabindex="0" aria-label="Continue video">
 <div class="expoButtonText text fs-30">Continue</div>
 </div>
 </div>
