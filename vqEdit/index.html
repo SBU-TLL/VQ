@@ -36,11 +36,9 @@
                 <div id="newPanelText" class="text fs-20">To create a new video quiz, please upload the video file that you would like to use.
                     <br/>
                     <br/> Please ensure that your video is in .mp4 or .m4v format.</div>
-                <label for="videoUpload">
-                    <div id="uploadVideoButton" class="btn rounded">
-                        <div id="uploadVideoButtonText" class="textF fs-30">Upload Video</div>
-                    </div>
-                </label>
+                <button type="button" id="uploadVideoButton" class="btn rounded" aria-label="Upload video">
+                    <span id="uploadVideoButtonText" class="textF fs-30">Upload Video</span>
+                </button>
                 <input type="file" name="File Upload" id="videoUpload" accept=".mp4,.MP4,.m4v,.M4V" tabindex="-1" />
             </div>
             <div id="editPanel">
@@ -48,23 +46,23 @@
                 <div id="editPanelText" class="text fs-20">To edit an existing video quiz, please select it from the dropdown menu below.
                     <br/>
                     <br/> The quiz URL will remain the same, so you don't have to send another link to your students.</div>
-                <select id="loadQuiz" class="quizSelect text fs-24 btn">
-                    <option value="0">Select a quiz:</option>
+                <select id="loadQuiz" class="quizSelect text fs-24 btn" tabindex="0" aria-label="Select quiz to edit">
+                    <option value="-1">Select a quiz:</option>
                 </select>
-                <div id="showFoldersButton" class="btn"></div>
+                <button type="button" id="showFoldersButton" class="btn" aria-label="Show folders"></button>
             </div>
-            <div id="statsPanel" class="menuPanel rounded btn">
-                <div id="statsLabel" class="menuLabel textF fs-30">Statistics</div>
-            </div>
-            <div id="fileManagerPanel" class="menuPanel rounded btn">
-                <div id="fileManagerLabel" class="menuLabel textF fs-30">Delete Quiz</div>
-            </div>
-            <div id="sharePanel" class="menuPanel rounded btn">
-                <div id="shareLabel" class="menuLabel textF fs-30">Batch Sharing</div>
-            </div>
-            <div id="feedbackPanel" class="menuPanel rounded btn">
-                <div id="feedbackLabel" class="menuLabel textF fs-30">Help/Feedback</div>
-            </div>
+            <button type="button" id="statsPanel" class="menuPanel rounded btn" aria-label="Statistics">
+                <span id="statsLabel" class="menuLabel textF fs-30">Statistics</span>
+            </button>
+            <button type="button" id="fileManagerPanel" class="menuPanel rounded btn" aria-label="Delete quiz">
+                <span id="fileManagerLabel" class="menuLabel textF fs-30">Delete Quiz</span>
+            </button>
+            <button type="button" id="sharePanel" class="menuPanel rounded btn" aria-label="Batch sharing">
+                <span id="shareLabel" class="menuLabel textF fs-30">Batch Sharing</span>
+            </button>
+            <button type="button" id="feedbackPanel" class="menuPanel rounded btn" aria-label="Help and feedback">
+                <span id="feedbackLabel" class="menuLabel textF fs-30">Help/Feedback</span>
+            </button>
             <a id="fileFormatErrorLink">
                 <div id="fileFormatError">
                     <div id="fileFormatErrorText" class="text fs-19"></div>

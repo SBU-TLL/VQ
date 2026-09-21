@@ -648,6 +648,10 @@ function initButtons() {
     }
 
     // Upload Video
+    $("#uploadVideoButton").click(function () {
+        $("#videoUpload").click();
+    });
+
     $("#videoUpload").change(function (e) {
         var data = null;
         var file = e.target.files[0];
@@ -686,6 +690,17 @@ function initButtons() {
             setTimeout(function () {
                 $("#loadQuiz").val(-1);
             }, 150);
+        }
+    });
+
+    $("#loadQuiz").keydown(function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            if (this.showPicker) {
+                this.showPicker();
+            } else {
+                $(this).click();
+            }
         }
     });
 
