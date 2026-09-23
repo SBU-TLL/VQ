@@ -75,53 +75,53 @@
             </a>
         </div>
         <div id="headerBar">
-            <div id="returnToMenu" class="rounded btn"></div>
+            <button id="returnToMenu" class="rounded btn"></button>
             <input id="quizTitleInput" class="text fs-30 rounded readOnlyHide" tabindex="-1">
             <select id="quizStatsSelect" class="quizSelect text fs-24 btn">
                 <option value="0">Total Stats</option>
             </select>
             <div id="headerStatsLabel" class="textF fs-40 readOnlyShow">Statistics</div>
-            <div id="saveButton" class="rounded btn">
+            <button id="saveButton" class="rounded btn">
                 <div id="saveButtonText" class="csvButtonText text fs-15">
                     Save Quiz
                 </div>
-            </div>
+            </button>
             <div id="readOnlyLabel" class="textF fs-25">Read-Only</div>
-            <div id="copyLinkButton" class="btn rounded readOnlyHide">
+            <button id="copyLinkButton" class="btn rounded readOnlyHide">
                 <div id="copyLinkButtonText" class="csvButtonText text fs-15">
                     Copy Quiz Link
                 </div>
-            </div>
+            </button>
             <div id="copyLinkBubble" class="rounded">
                 <input id="copyLinkBubbleText" class="text fs-20 rounded" readonly tabindex="-1">
             </div>
-            <div id="permissionsButton" class="btn rounded readOnlyHide">
+            <button id="permissionsButton" class="btn rounded readOnlyHide">
                 <div id="permissionsButtonText" class="csvButtonText text fs-15">
                     Permissions
                 </div>
-            </div>
+            </button>
             <div id="permissionsBlocker"></div>
             <label for="fileUploadInput">
-                <div id="uploadCSVButton" class="btn rounded readOnlyHide">
+                <button id="uploadCSVButton" class="btn rounded readOnlyHide">
                     <div id="uploadCSVButtonText" class="csvButtonText text fs-15">
                         Upload CSV
                     </div>
-                </div>
+                </button>
             </label>
             <input type="file" name="File Upload" id="fileUploadInput" accept=".csv" tabindex="-1" />
-            <div id="downloadCSVButton" class="btn rounded readOnlyHide">
+            <button id="downloadCSVButton" class="btn rounded readOnlyHide">
                 <div id="downloadCSVButtonText" class="csvButtonText text fs-15">
                     Download CSV
                 </div>
-            </div>
+            </button>
             <div id="uploadCSVBlocker" class="csvBlocker"></div>
             <div id="downloadCSVBlocker" class="csvBlocker"></div>
-            <div id="editorHelpButton" class="rounded btn readOnlyHide"></div>
-            <div id="statsDownloadButton" class="rounded btn readOnlyShow text fs-20">
+            <button id="editorHelpButton" class="rounded btn readOnlyHide"></button>
+            <button id="statsDownloadButton" class="rounded btn readOnlyShow text fs-20">
                 <div id="statsDownloadButtonText" class="text fs-20">
                     Score Reporting
                 </div>
-            </div>
+            </button>
         </div>
         <div id="editorView">
             <div id="videoPlayer">
@@ -163,13 +163,13 @@
                     <option value="fitb">Fill in the Blank</option>
                     <option value="sr">Short Response</option>
                 </select>
-                <div id="removeQuestionButton" class="btn"></div>
+                <button id="removeQuestionButton" class="btn"></button>
                 <div id="questionTextLabel" class="textF fs-20">Question Text</div>
                 <textarea id="questionTextInput" class="text fs-16 rounded" type="text"></textarea>
                 <div id="questionChoiceLabel" class="textF fs-20 show-mc">Answer Choice Text</div>
                 <div id="questionChoiceBox1" class="questionChoiceBox show-mc">
                     <input id="questionChoiceInput1" class="questionChoiceInput text fs-16 rounded" placeholder="Answer Choice 1">
-                    <div id="questionChoiceCorrect1" class="questionChoiceCorrect checkOff btn"></div>
+                    <button id="questionChoiceCorrect1" class="questionChoiceCorrect checkOff btn"></button>
                     <div id="questionExpoBox1" class="questionExpoBox rounded">
                         <div class="questionExpoTitle textF fs-20">Expository Text</div>
                         <textarea id="questionExpoInput1" class="questionExpoInput rounded text fs-16" placeholder="Optional. This text will be displayed when the user selects answer choice 1."></textarea>
@@ -178,7 +178,7 @@
                 </div>
                 <div id="questionChoiceBox2" class="questionChoiceBox show-mc">
                     <input id="questionChoiceInput2" class="questionChoiceInput text fs-16 rounded" placeholder="Answer Choice 2">
-                    <div id="questionChoiceCorrect2" class="questionChoiceCorrect checkOff btn"></div>
+                    <button id="questionChoiceCorrect2" class="questionChoiceCorrect checkOff btn"></button>
                     <div id="questionExpoBox2" class="questionExpoBox rounded">
                         <div class="questionExpoTitle textF fs-20">Expository Text</div>
                         <textarea id="questionExpoInput2" class="questionExpoInput rounded text fs-16" placeholder="Optional. This text will be displayed when the user selects answer choice 2."></textarea>
@@ -187,7 +187,7 @@
                 </div>
                 <div id="questionChoiceBox3" class="questionChoiceBox show-mc">
                     <input id="questionChoiceInput3" class="questionChoiceInput text fs-16 rounded" placeholder="Answer Choice 3">
-                    <div id="questionChoiceCorrect3" class="questionChoiceCorrect checkOff btn"></div>
+                    <button id="questionChoiceCorrect3" class="questionChoiceCorrect checkOff btn"></button>
                     <div id="questionExpoBox3" class="questionExpoBox rounded">
                         <div class="questionExpoTitle textF fs-20">Expository Text</div>
                         <textarea id="questionExpoInput3" class="questionExpoInput rounded text fs-16" placeholder="Optional. This text will be displayed when the user selects answer choice 3."></textarea>
@@ -196,7 +196,7 @@
                 </div>
                 <div id="questionChoiceBox4" class="questionChoiceBox show-mc">
                     <input id="questionChoiceInput4" class="questionChoiceInput text fs-16 rounded" placeholder="Answer Choice 4">
-                    <div id="questionChoiceCorrect4" class="questionChoiceCorrect checkOff btn"></div>
+                    <button id="questionChoiceCorrect4" class="questionChoiceCorrect checkOff btn"></button>
                     <div id="questionExpoBox4" class="questionExpoBox rounded">
                         <div class="questionExpoTitle textF fs-20">Expository Text</div>
                         <textarea id="questionExpoInput4" class="questionExpoInput rounded text fs-16" placeholder="Optional. This text will be displayed when the user selects answer choice 4."></textarea>
@@ -205,7 +205,7 @@
                 </div>
                 <div id="questionChoiceBox5" class="questionChoiceBox show-mc">
                     <input id="questionChoiceInput5" class="questionChoiceInput text fs-16 rounded" placeholder="Answer Choice 5">
-                    <div id="questionChoiceCorrect5" class="questionChoiceCorrect checkOff btn"></div>
+                    <button id="questionChoiceCorrect5" class="questionChoiceCorrect checkOff btn"></button>
                     <div id="questionExpoBox5" class="questionExpoBox rounded">
                         <div class="questionExpoTitle textF fs-20">Expository Text</div>
                         <textarea id="questionExpoInput5" class="questionExpoInput rounded text fs-16" placeholder="Optional. This text will be displayed when the user selects answer choice 5."></textarea>
@@ -214,7 +214,7 @@
                 </div>
   <div id="questionChoiceBox6" class="questionChoiceBox show-mc">
                     <input id="questionChoiceInput6" class="questionChoiceInput text fs-16 rounded" placeholder="Answer Choice 6">
-                    <div id="questionChoiceCorrect6" class="questionChoiceCorrect checkOff btn"></div>
+                    <button id="questionChoiceCorrect6" class="questionChoiceCorrect checkOff btn"></button>
                     <div id="questionExpoBox6" class="questionExpoBox rounded">
                         <div class="questionExpoTitle textF fs-20">Expository Text</div>
                         <textarea id="questionExpoInput6" class="questionExpoInput rounded text fs-16" placeholder="Optional. This text will be displayed when the user selects answer choice 5."></textarea>
@@ -230,14 +230,14 @@
                 <div id="questionTimingBox1" class="questionTimingBox rounded readOnlyHide">
                     <div id="questionTimingBoxLabel1" class="questionTimingBoxLabel text fs-16">Question appears on-screen at:</div>
                     <div id="questionTimingBoxText1" class="questionTimingBoxText text fs-30"></div>
-                    <div id="questionTimingJump1" class="questionTimingJump rounded btn"></div>
-                    <div id="questionTimingSet1" class="questionTimingSet rounded btn"></div>
+                    <button id="questionTimingJump1" class="questionTimingJump rounded btn"></button>
+                    <button id="questionTimingSet1" class="questionTimingSet rounded btn"></button>
                 </div>
                 <div id="questionTimingBox2" class="questionTimingBox rounded readOnlyHide">
                     <div id="questionTimingBoxLabel2" class="questionTimingBoxLabel text fs-16">Send wrong answers to:</div>
                     <div id="questionTimingBoxText2" class="questionTimingBoxText text fs-30"></div>
-                    <div id="questionTimingJump2" class="questionTimingJump rounded btn"></div>
-                    <div id="questionTimingSet2" class="questionTimingSet rounded btn"></div>
+                    <button id="questionTimingJump2" class="questionTimingJump rounded btn"></button>
+                    <button id="questionTimingSet2" class="questionTimingSet rounded btn"></button>
                 </div>
                 <div id="questionStats" class="readOnlyShow">
                     <div id="averageAttempts" class="rounded">
@@ -265,7 +265,7 @@
             </div>
             <div id="numberButtonPanel"></div>
             <div id="cannotReset" class="text">
-                <div id="resetIcon" class="resetGreen btn"></div>
+                <button id="resetIcon" class="resetGreen btn"></button>
                 Allow Quiz Replay</div>
             <div id="errorBubble">
                 <div id="errorBubbleText" class="text fs-20"></div>
@@ -280,12 +280,12 @@
             <div id="unsavedWarningIcon1" class="unsavedWarningIcon"></div>
             <div id="unsavedWarningIcon2" class="unsavedWarningIcon"></div>
             <div id="unsavedWarningSubtext" class="text fs-20">You have unsaved edits. If you return to the main menu, these edits will be lost!</div>
-            <div id="unsavedWarningButton1" class="unsavedWarningButton rounded btn">
+            <button id="unsavedWarningButton1" class="unsavedWarningButton rounded btn">
                 <div id="unsavedWarningButtonText1" class="unsavedWarningButtonText textF fs-25">KEEP WORKING</div>
-            </div>
-            <div id="unsavedWarningButton2" class="unsavedWarningButton rounded btn">
+            </button>
+            <button id="unsavedWarningButton2" class="unsavedWarningButton rounded btn">
                 <div id="unsavedWarningButtonText2" class="unsavedWarningButtonText textF fs-25">DISCARD EDITS</div>
-            </div>
+            </button>
         </div>
         <div id="unsavedWarningBG"></div>
         <div id="helpOverlay">
@@ -329,21 +329,22 @@
                     <option value="0">All Users</option>
                 </select>
                 <label for="filterUpload">
-                    <div id="uploadFilterButton" class="rounded btn">
+                    <button id="uploadFilterButton" class="rounded btn">
                         <div id="uploadFilterButtonText" class="filterButtonText text fs-20">Upload Filter CSV</div>
-                    </div>
+                    </button>
                 </label>
                 <input type="file" name="Filter Upload" id="filterUpload" accept=".csv" tabindex="-1" />
-                <div id="downloadFilterButton" class="rounded btn">
+                <button id="downloadFilterButton" class="rounded btn">
                     <div id="downloadFilterButtonText" class="filterButtonText text fs-20">Download Filter CSV</div>
-                </div>
-                <div id="downloadScoresButton" class="rounded btn">
+                </button>
+                <button id="downloadScoresButton" class="rounded btn">
                     <div id="downloadScoresButtonText" class="text fs-30">Download Scores</div>
-                </div>
-                <div id="downloadAllScoresButton" class="rounded btn">
+                </button>
+                <button id="downloadAllScoresButton" class="rounded btn">
                     <div id="downloadAllScoresButtonText" class="text fs-30">All Sections</div>
-                </div>
-                <div id="scoreReportReturn" class="rounded btn popupReturn"></div>
+                </button>
+                <button id="scoreReportReturn" class="rounded btn popupReturn"></button>
+
             </div>
         </div>
         <div id="permissionsView">
@@ -361,12 +362,12 @@
             <div id="optionsPanel" class="rounded">
                 <div id="optionsLabel" class="textF fs-50">Options</div>
                 <div id="publicModeBox" class="optionsModeBox">
-                    <div id="publicCheckbox" class="optionsCheckbox btn"></div>
+                    <button id="publicCheckbox" class="optionsCheckbox btn"></button>
                     <div id="publicLabel" class="optionsLabel text fs-20">Enable Public Mode</div>
                     <div id="publicSubtext" class="optionsSubtext text fs-14">If enabled, anyone can view this quiz. No data is collected.</div>
                 </div>
                 <div id="privateModeBox" class="optionsModeBox">
-                    <div id="privateCheckbox" class="optionsCheckbox btn"></div>
+                    <button id="privateCheckbox" class="optionsCheckbox btn"></button>
                     <div id="privateLabel" class="optionsLabel text fs-20">Enable Private Mode</div>
                     <div id="privateSubtext" class="optionsSubtext text fs-14">If enabled, only whitelisted students can view this quiz.</div>
                 </div>
@@ -381,12 +382,12 @@
                 </div>
             </div>
             <div id="permissionsOKPanel" class="rounded">
-                <div id="permissionsCancel" class="permissionsButton rounded btn">
+                <button id="permissionsCancel" class="permissionsButton rounded btn">
                     <div id="permissionsCancelText" class="textF fs-30 deleteViewButtonText">Cancel</div>
-                </div>
-                <div id="permissionsSubmit" class="permissionsButton rounded btn">
+                </button>
+                <button id="permissionsSubmit" class="permissionsButton rounded btn">
                     <div id="permissionsSubmitText" class="textF fs-30 deleteViewButtonText">Submit</div>
-                </div>
+                </button>
             </div>
         </div>
         <div id="userStatsView">
@@ -439,12 +440,12 @@
                 <select id="deleteDropdown" class="quizSelect text fs-30 btn">
                     <option value="0">Select a quiz:</option>
                 </select>
-                <div id="deleteReturn" class="rounded btn">
+                <button id="deleteReturn" class="rounded btn">
                     <div id="deleteReturnText" class="textF fs-30 deleteViewButtonText">Cancel</div>
-                </div>
-                <div id="deleteConfirm" class="rounded btn">
+                </button>
+                <button id="deleteConfirm" class="rounded btn">
                     <div id="deleteConfirmText" class="textF fs-30 deleteViewButtonText">Confirm</div>
-                </div>
+                </button>
             </div>
             <div id="deleteConveyor"></div>
             <div id="deleteBox">
@@ -466,31 +467,31 @@
             <div id="feedbackText" class="text fs-32">Have a question or feature request? Found a bug?
                 <br>Let us know in the box below!</div>
             <textarea id="feedbackInput" class="text fs-18 rounded"></textarea>
-            <div id="feedbackCancel" class="rounded btn">
+            <button id="feedbackCancel" class="rounded btn">
                 <div class="feedbackButtonText textF fs-40">Cancel</div>
-            </div>
-            <div id="feedbackSend" class="rounded btn">
+            </button>
+            <button id="feedbackSend" class="rounded btn">
                 <div class="feedbackButtonText textF fs-40">Send</div>
-            </div>
+            </button>
         </div>
         <div id="loadingScreen"></div>
         <div id="shareView">
             <div id="shareBG" class="rounded">
-                <div id="shareReturn" class="rounded btn"></div>
+                <button id="shareReturn" class="rounded btn"></button>
                 <div id="shareTitleLabel" class="textF fs-60">Batch Sharing</div>
                 <div id="shareTitleSubtext" class="text fs-30">Share video quiz data with multiple users at once.</div>
                 <div id="shareQuizSelectTitle" class="text fs-30">Select which quizzes to share.</div>
                 <div id="shareQuizSelect" class="scrollPane rounded"></div>
                 <div id="shareQuizUsersTitle" class="text fs-30">Input who to share them with.</div>
                 <textarea id="shareQuizUsers" class="text fs-27 rounded" placeholder="Enter one NetID per line. The quiz data will be shared with the specified users."></textarea>
-                <div id="shareSubmit" class="rounded btn">
+                <button id="shareSubmit" class="rounded btn">
                     <div id="shareSubmitText" class="textF fs-40">Submit</div>
-                </div>
+                </button>
             </div>
         </div>
         <div id="folderView">
             <div id="folderBG"></div>
-            <div id="folderReturn" class="rounded btn"></div>
+            <button id="folderReturn" class="rounded btn"></button>
             <div id="folderTitle" class="textF fs-80">Select Quiz</div>
             <div id="folderList"></div>
             <div id="folderInfo">
@@ -499,18 +500,18 @@
                     <div id="folderQuizThumbnail" class="folderThumbnail"></div>
                     <div id="folderInfoSelectLabel" class="textF fs-20">Move to Folder</div>
                     <select id="folderInfoSelect" class="text fs-25"></select>
-                    <div id="folderInfoSubmit" class="btn rounded">
+                    <button id="folderInfoSubmit" class="btn rounded">
                         <div id="folderInfoSubmitText" class="textF fs-35">Edit Quiz</div>
-                    </div>
+                    </button>
                 </div>
                 <div id="folderFolderPanel" class="folderInfoPanel">
                     <input id="folderTitleInput" class="text fs-30 rounded">
                     <div id="folderFolderThumbnail" class="folderThumbnail">
                         <div id="folderThumbNumber" class="folderNum textF fs-120"></div>
                     </div>
-                    <div id="folderDeleteButton" class="folderDelete btn rounded">
+                    <button id="folderDeleteButton" class="folderDelete btn rounded">
                         <div id="folderDeleteButtonText" class="textF fs-30">Delete Folder</div>
-                    </div>
+                    </button>
                     <div id="folderDeleteInfoText" class="folderDelete textF fs-20">Normally, quizzes will not be deleted, but will be moved to "Uncategorized",
 		To bulk remove quizzes make a folder titled "delete", move the quizzes there, and then delete that folder. 
 		</div>
@@ -519,12 +520,12 @@
                     <div id="folderBlankText" class="textF fs-30">Click a folder's icon to expand it</div>
                 </div>
             </div>
-            <div id="folderAddButton" class="btn"></div>
+            <button id="folderAddButton" class="btn"></button>
             <div id="folderAddText" class="textF fs-35">New Folder</div>
         </div>
         <div id="myModal" class="modal">
           <div class="modal-content">
-            <span class="close" id="closeButton">&times;</span>
+            <button class="close" id="closeButton">&times;</button>
             <div class="modal-text"><label>Warning</label><hr>Your browser does not support this function. Please update your browser or use this in Chrome.</div>
           </div>
         </div>
