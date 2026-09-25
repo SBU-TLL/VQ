@@ -199,7 +199,7 @@ function loadUserData() {
         // Add checkboxes for batch sharing
         if (quiz.isOwner) {
             $("#shareQuizSelect").append('<div id="shareItem' + i + '" class="shareItem"></div>');
-            $("#shareItem" + i).append('<div id="shareCheckbox' + i + '" class="shareCheckbox btn"></div>');
+            $("#shareItem" + i).append('<button  id="shareCheckbox' + i + '" class="shareCheckbox btn"></button>');
             $("#shareItem" + i).append('<div id="shareText' + i + '" class="shareText text fs-27"></div>');
             $("#shareItem" + i).css("top", (2.5 + 7.5 * i) + "%");
             $("#shareText" + i).text(quiz.title);
@@ -514,7 +514,7 @@ function initButtons() {
     });
     // Question number buttons
     for (var i = 0; i < 20; i++) {
-        $("#numberButtonPanel").append("<div id='questionButton" + i + "' class='questionButton'></div>");
+        $("#numberButtonPanel").append("<button type='button' id='questionButton" + i + "' class='questionButton' disabled></button>");
         $("#questionButton" + i).append("<div id='questionButtonText" + i + "' class='questionButtonText text fs-30'>" + (i + 1) + "</div>");
         $("#questionButton" + i).css({
             'left': (20 * (i % 5)) + "%",
@@ -715,6 +715,7 @@ function initButtons() {
                 "opacity": 1,
                 "pointer-events": "auto"
             });
+            $("#statsDownloadButton").prop("disabled", false);
         } else {
             hideEditorBody();
             showStatsPanel();
@@ -722,6 +723,7 @@ function initButtons() {
                 "opacity": .25,
                 "pointer-events": "none"
             });
+            $("#statsDownloadButton").prop("disabled", true);
         }
         if (optionSelected > -1) {
             var path = userData.quizData[optionSelected].relativePath.split("/");
@@ -1289,6 +1291,7 @@ function updateQuestionPanel(i, forceAnimation) {
             $("#questionButton" + j).removeClass("btn");
         }
     }
+    updateQuestionButtonAvailability();
     if (i < questions.length) {
         setQuestionType(questions[i].type);
     }
@@ -1303,6 +1306,8 @@ function changeQuestionType(t) {
 }
 
 function setQuestionType(t) {
+    $(".show-mc").prop("inert", t !== "mc");
+    $(".show-fitb").prop("inert", t !== "fitb");
     setTimeout(function () {
         if (t == "mc") {
             // Multiple choice
@@ -1357,6 +1362,14 @@ function updateQuestionButtons() {
         } else {
             deselectQuestion(i);
         }
+    }
+}
+
+function updateQuestionButtonAvailability() {
+    for (var i = 0; i < 20; i++) {
+        var isExistingQuestion = i < questions.length;
+        var canAddQuestion = i == questions.length && !readOnly && isEditor();
+        $("#questionButton" + i).prop("disabled", !isExistingQuestion && !canAddQuestion);
     }
 }
 
@@ -1508,6 +1521,7 @@ function showEditorView() {
 function showHeaderBar() {
     if (!showingHeaderBar) {
         showingHeaderBar = true;
+        $("#headerBar").prop("inert", false);
         $("#headerBar").css({
             "opacity": 1,
             "pointer-events": "auto"
@@ -1523,6 +1537,7 @@ function showHeaderBar() {
 function showEditorBody() {
     if (!showingEditor) {
         showingEditor = true;
+        $("#editorView").prop("inert", false);
         $("#editorView").css({
             "opacity": 1,
             "pointer-events": "auto"
@@ -1552,6 +1567,7 @@ function hideEditorView() {
 function hideHeaderBar() {
     if (showingHeaderBar) {
         showingHeaderBar = false;
+        $("#headerBar").prop("inert", true);
         $("#headerBar").addClass("anim_topSideOut");
         setTimeout(function () {
             $("#headerBar").removeClass("anim_topSideOut");
@@ -1566,6 +1582,7 @@ function hideHeaderBar() {
 function hideEditorBody() {
     if (showingEditor) {
         showingEditor = false;
+        $("#editorView").prop("inert", true);
         $("#videoPlayer").addClass("anim_leftSideOut");
         $("#watchTimeBox").addClass("anim_leftSideOut");
         $("#videoControls").addClass("anim_leftSideOut");
@@ -1600,6 +1617,7 @@ function showMenuView() {
             "opacity": .25,
             "pointer-events": "none"
         });
+        $("#statsDownloadButton").prop("disabled", true);
         currentQuizEditor = "";
         currentQuizEditCode = "";
         updatePermissionLocks();
@@ -1641,6 +1659,12 @@ function hideProgressPanel() {
     }
 }
 
+function focusAfterPanelOpens(selector) {
+    setTimeout(function () {
+        $(selector).trigger("focus");
+    }, 160);
+}
+
 // Show/hide warning panel
 function showWarningPanel() {
     if (!showingWarning) {
@@ -1649,6 +1673,7 @@ function showWarningPanel() {
         $("#unsavedWarningBG").removeClass("anim_fadeOutBG");
         $("#unsavedWarningBG").addClass("anim_fadeInBG");
         showingWarning = true;
+        focusAfterPanelOpens("#unsavedWarningButton1");
     }
 }
 
@@ -1671,6 +1696,7 @@ function showDeleteView() {
         confirmDeleteLevel = 0;
         updateConfirmDelete();
         $("#deleteDropdown").val(-1);
+        focusAfterPanelOpens("#deleteDropdown");
     }
 }
 
@@ -1789,6 +1815,7 @@ function isQuestionEmpty(q) {
 
 function showSaveButton() {
     if (!showingSaveButton) {
+        $("#saveButton").prop("disabled", false);
         $("#saveButton").removeClass("anim_exitSaveButton");
         $("#saveButton").addClass("anim_enterSaveButton");
         $("#saveButtonText").text("Save Quiz");
@@ -1798,6 +1825,7 @@ function showSaveButton() {
 
 function hideSaveButton() {
     if (showingSaveButton) {
+        $("#saveButton").prop("disabled", true);
         $("#saveButton").removeClass("anim_enterSaveButton");
         $("#saveButton").addClass("anim_exitSaveButton");
         $("#saveButtonText").text("Saved!");
@@ -1806,6 +1834,7 @@ function hideSaveButton() {
 }
 
 function instantHideSaveButton() {
+    $("#saveButton").prop("disabled", true);
     if (showingSaveButton) {
         $("#saveButton").removeClass("anim_enterSaveButton");
         showingSaveButton = false;
@@ -1837,6 +1866,8 @@ function updateEditorView() {
     }
     // Switch UI based on readOnly setting.
     if (readOnly) {
+        $("#questionTypeSelect, #removeQuestionButton, .questionChoiceCorrect").prop("disabled", true);
+        $("#questionTextInput, .questionChoiceInput, .questionExpoInput, #questionAnswerInput").prop("readonly", true);
         $("#quizTitleInput").css({
             "opacity": 0,
             "z-index": -100
@@ -1852,6 +1883,9 @@ function updateEditorView() {
         $("#videoPlayPause").css("left", "5%");
         $("#timeDisplay").css("left", "17.5%");
     } else {
+        var canEdit = isEditor();
+        $("#questionTypeSelect, #removeQuestionButton, .questionChoiceCorrect").prop("disabled", !canEdit);
+        $("#questionTextInput, .questionChoiceInput, .questionExpoInput, #questionAnswerInput").prop("readonly", !canEdit);
         $("#quizTitleInput").css({
             "opacity": 1,
             "z-index": 100
@@ -1867,6 +1901,7 @@ function updateEditorView() {
         $("#videoPlayPause").css("left", "30%");
         $("#timeDisplay").css("left", "42.5%");
     }
+    updateQuestionButtonAvailability();
 }
 
 function showStats() {
@@ -1894,6 +1929,7 @@ function showStatsPanel() {
             "opacity": .25,
             "pointer-events": "none"
         });
+        $("#statsDownloadButton").prop("disabled", true);
     }
 }
 
@@ -1998,6 +2034,7 @@ function showFeedbackView() {
         $("#feedbackView").removeClass("anim_progressOut");
         $("#feedbackView").addClass("anim_progressIn");
         showingFeedback = true;
+        focusAfterPanelOpens("#feedbackInput");
     }
 }
 
@@ -2018,6 +2055,7 @@ function showShareView() {
         $("#shareView").removeClass("anim_progressOut");
         $("#shareView").addClass("anim_progressIn");
         showingShare = true;
+        focusAfterPanelOpens("#shareQuizUsers");
     }
 }
 
@@ -2038,6 +2076,7 @@ function showScoreReport() {
         $("#unsavedWarningBG").addClass("anim_fadeInBG");
         showingScoreReport = true;
         location.hash = location.hash + "scores/";
+        focusAfterPanelOpens("#scoreReportFormatSelect");
     }
 }
 
@@ -2060,6 +2099,7 @@ function showPermissionsView() {
         $("#unsavedWarningBG").removeClass("anim_fadeOutBG");
         $("#unsavedWarningBG").addClass("anim_fadeInBG");
         showingPermissions = true;
+        focusAfterPanelOpens("#permissionsReportInput");
     }
 }
 
@@ -2137,6 +2177,7 @@ function updatePermissionLocks() {
         $("#readOnlyLabel").css("visibility", "hidden");
         $("#uploadCSVButton").css("opacity", "1");
         $("#downloadCSVButton").css("opacity", "1");
+        $("#uploadCSVButton, #downloadCSVButton").prop("disabled", false);
         $(".csvBlocker").css("visibility", "hidden");
     } else {
         // Make text boxes read-only and disable question type dropdown
@@ -2149,17 +2190,21 @@ function updatePermissionLocks() {
         $("#readOnlyLabel").css("visibility", "visible");
         $("#uploadCSVButton").css("opacity", ".25");
         $("#downloadCSVButton").css("opacity", ".25");
+        $("#uploadCSVButton, #downloadCSVButton").prop("disabled", true);
         $(".csvBlocker").css("visibility", "visible");
     }
     if (isAuthor()) {
         // Enable permissions
         $("#permissionsButton").css("opacity", 1);
+        $("#permissionsButton").prop("disabled", false);
         $("#permissionsBlocker").css("visibility", "hidden");
     } else {
         // Disable permissions
         $("#permissionsButton").css("opacity", .25);
+        $("#permissionsButton").prop("disabled", true);
         $("#permissionsBlocker").css("visibility", "visible");
     }
+    updateQuestionButtonAvailability();
 }
 
 // Show/hide folder view
@@ -2170,6 +2215,7 @@ function showFolderView() {
         makeFolders();
         showingFolder = true;
         setFolderView("", -1);
+        focusAfterPanelOpens("#folderReturn");
     }
 }
 
@@ -2187,7 +2233,7 @@ function makeFolders() {
     for (var i = 0; i < folders.length; i++) {
         $("#folderList").append('<div id="folder' + i + '" class="folderItem btn folder"></div>');
         $("#folder" + i).append('<div id="folderBox' + i + '" class="folderBox"></div>');
-        $("#folderBox" + i).append('<div id="folderIcon' + i + '" class="folderIcon"></div>');
+        $("#folderBox" + i).append('<button id="folderIcon' + i + '" class="rounded btn folderIcon"></button>');
         $("#folderBox" + i).append('<div id="folderName' + i + '" class="folderName text fs-28"></div>');
         $("#folderIcon" + i).append('<div id="folderNum' + i + '" class="folderNum text fs-20"></div>');
         $("#folderName" + i).text(folders[i].name);
@@ -2263,19 +2309,22 @@ function setFolderView(type, id) {
         $("#folderInfoSelect").val(folderID);
         $("#folderQuizTitle").text(userData.quizData[id].title);
         // Fade out edit button if user is not the owner
-        if (userData.quizData[id].owner != userData.netID) {
+        var canEditQuiz = userData.quizData[id].owner == userData.netID;
+        if (!canEditQuiz) {
             $("#folderInfoSubmit").css("opacity", ".25");
             $("#folderInfoSubmit").removeClass("btn");
         } else {
             $("#folderInfoSubmit").css("opacity", "1");
             $("#folderInfoSubmit").addClass("btn");
         }
+        $("#folderInfoSubmit").prop("disabled", !canEditQuiz);
     } else if (type == "folder") {
         $("#folderFolderPanel").css("visibility", "visible");
         $("#folder" + id).addClass("anim_folderSelected");
         $("#folderTitleInput").val(folders[folderSelected.id].name);
         $("#folderThumbNumber").text(folders[folderSelected.id].quizzes.length);
-        if (folderSelected.id < folders.length - 1) {
+        var canEditFolder = folderSelected.id < folders.length - 1;
+        if (canEditFolder) {
             $(".folderDelete").css("opacity", "1");
             $("#folderDeleteButton").addClass("btn");
             $("#folderTitleInput").css("pointer-events", "auto");
@@ -2284,6 +2333,7 @@ function setFolderView(type, id) {
             $("#folderDeleteButton").removeClass("btn");
             $("#folderTitleInput").css("pointer-events", "none");
         }
+        $("#folderDeleteButton, #folderTitleInput").prop("disabled", !canEditFolder);
     } else {
         $("#folderBlankPanel").css("visibility", "visible");
     }
