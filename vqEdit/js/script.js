@@ -2253,11 +2253,21 @@ function makeFolders() {
         initFolderQuizClick(i);
     }
     updateFolders(false);
-    updateFolderDropdown();
+    updateFolderDropdown();qq
     resizeWindow();
 }
 
 function initFolderClick(i) {
+    $("#folderIcon" + i).keydown(function (evt) {
+        if (evt.key === "Enter" || evt.key === " ") {
+            evt.preventDefault();
+            evt.stopPropagation();
+            setFolderView("folder", i);
+            if (i < folders.length - 1) {
+                $("#folderTitleInput").trigger("focus");
+            }
+        }
+    });
     $("#folderIcon" + i).click(function (evt) {
         if (!folders[i].expand) {
             expandFolder(i);
