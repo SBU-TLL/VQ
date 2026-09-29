@@ -129,13 +129,13 @@ The maximum score is 2000 points.
 <div id="expoText" class="text fs-30"></div>
 <div id="expoButtons">
 <button type="button" id="expoButtonReview" class="expoButton rounded" aria-label="Review question">
-<span class="expoButtonText text fs-30">Review</span>
+<span class="expoButtonText text fs-24">Review</span>
 </button>
 <button type="button" id="expoButtonRetry" class="expoButton rounded" aria-label="Retry question">
-<span class="expoButtonText text fs-30">Retry</span>
+<span class="expoButtonText text fs-24">Retry</span>
 </button>
 <button type="button" id="expoButtonContinue" class="expoButton rounded" aria-label="Continue video">
-<span class="expoButtonText text fs-30">Continue</span>
+<span class="expoButtonText text fs-24">Continue</span>
 </button>
 </div>
 </div>

@@ -135,13 +135,13 @@ else{
                             <div id="expoText" class="text fs-30"></div>
                             <div id="expoButtons" role="group" aria-label="Question Navigation">
                                 <button id="expoButtonReview" class="expoButton rounded">
-                                    <span class="expoButtonText text fs-30">Review</span>
+                                    <span class="expoButtonText text fs-24">Review</span>
                                 </button>
                                 <button id="expoButtonRetry" class="expoButton rounded">
-                                    <span class="expoButtonText text fs-30">Retry</span>
+                                    <span class="expoButtonText text fs-24">Retry</span>
                                 </button>
                                 <button id="expoButtonContinue" class="expoButton rounded">
-                                    <span class="expoButtonText text fs-30">Continue</span>
+                                    <span class="expoButtonText text fs-24">Continue</span>
                                 </button>
                             </div>
                         </div>
