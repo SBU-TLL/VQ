@@ -414,6 +414,7 @@ $("#hideQuestionButton").click(function () {
 $("#showQuestionButton").click(function () {
 		$(".answerBox div").css({"pointer-events":"all"});
 		maximizeQuestionPanel();
+		$("#hideQuestionButton").trigger("focus");
 		});
 
 $("#hideQuestionButton").hover(function () {
@@ -557,7 +558,8 @@ function betterParseInt(s) {	// Called by 0 functions:
 
 function prepQuestionScreen() {	// Called by 1 function: loadButtons()
 	for (var i = 0; i < 6; i++) {
-		$("#questionBoxContents").append("<div id='answerBox" + i + "' class='answerBox text fs-20' role='button' tabindex='0' aria-label='Answer option " + (i + 1) + "'></div>");
+		$("#questionBoxContents").append("<div id='answerBox" + i + "' class='answerBox text fs-26' role='button' tabindex='0' aria-label='Answer option " + (i + 1) + "'></div>");
+		$("#answerBox" + i).prop("inert", true).attr("aria-hidden", "true");
 		$("#answerBox" + i).append("<div id='answerIcon" + i + "' class='answerIcon btn' role='img' aria-hidden='true'></div>");
 		$("#answerBox" + i).append("<div id='answerText" + i + "' class='answerText' aria-hidden='true'></div>");
 		$("#answerBox" + i).css("top", (37.5 + 10 * i) + "%");
@@ -571,9 +573,7 @@ function prepQuestionScreen() {	// Called by 1 function: loadButtons()
 }
 
 	function initAnswerClickEvent(i) { // Called by 1 function: prepQuestionScreen()
-		$("#answerBox" + i).on("click keydown", function (e) {
-            if (e.type === "keydown" && e.key !== "Enter" && e.key !== " ") return;
-            if (e.type === "keydown" && e.key === " ") e.preventDefault();
+		$("#answerBox" + i).on("click", function () {
 			selectAnswer(i);
 			});
 }
@@ -593,6 +593,7 @@ function selectAnswer(n) {	// Called by 1 function: initAnswerClickEvent()
 		}
 
 		// Fade out non-selected answers
+		$(".answerBox").prop("inert", true).attr("aria-hidden", "true");
 		for (var i = 0; i < 6; i++) {
 			if (i != n) {
 				$("#answerBox" + i).addClass("anim_answerFadeOut");
@@ -621,6 +622,8 @@ function selectAnswer(n) {	// Called by 1 function: initAnswerClickEvent()
 
 function answerCorrect(n) {	// Called by 3 functions: selectAnswer(), submitFillAnswer() & submitShortResponse
 	// Correct answer :D
+	$(".answerBox").prop("inert", true).attr("aria-hidden", "true");
+	$("#fillInAnswer").prop("disabled", true);
 	var t = questions.questions[currentQuestion].type;
 	if (t == "mc") {
 		$("#answerIcon" + n).removeClass("anim_spinButton");
@@ -650,6 +653,7 @@ function answerCorrect(n) {	// Called by 3 functions: selectAnswer(), submitFill
 	$("#expoButtonReview").css("visibility", "hidden");
 	$("#expoButtonRetry").css("visibility", "hidden");
 	$("#expoButtonContinue").css("visibility", "visible");
+	focusAfterAnimation("#expoButtonContinue", 900);
 	// Update score
 	var oldScore = userScore;
 	updateScore();
@@ -662,6 +666,7 @@ function answerCorrect(n) {	// Called by 3 functions: selectAnswer(), submitFill
 }
 
 function animateAnswerCorrect(n) {	// Called by 2 functions: loadButtons() & answerCorrect()
+	$("#questionButton" + n).prop("inert", true);
 	$("#questionButton" + n).removeClass("anim_spinButton");
 	setTimeout(function () {
 			$("#questionButton" + n).addClass("anim_spinButton");
@@ -676,6 +681,8 @@ function animateAnswerCorrect(n) {	// Called by 2 functions: loadButtons() & ans
 
 function answerIncorrect(n) {	// Called by 2 functions: selectAnswer() & submitFillAnswer()
 	// Wrong answer :(
+	$(".answerBox").prop("inert", true).attr("aria-hidden", "true");
+	$("#fillInAnswer").prop("disabled", true);
 	var t = questions.questions[currentQuestion].type;
 	$("#questionButtonText" + currentQuestion).text("");
 	$("#questionButton" + currentQuestion).removeClass("anim_spinButton");
@@ -707,6 +714,7 @@ function answerIncorrect(n) {	// Called by 2 functions: selectAnswer() & submitF
 	$("#expoButtonReview").css("visibility", "visible");
 	$("#expoButtonRetry").css("visibility", "visible");
 	$("#expoButtonContinue").css("visibility", "visible");
+	focusAfterAnimation("#expoButtonRetry", 900);
 }
 
 function questionReview() {	// Called by 1 function: loadButtons()
@@ -851,6 +859,8 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 			$("#expoButtonContinue").css("visibility", "hidden");
 			$(".answerBox").removeClass("anim_answerFadeOut");
 			$(".answerBox").removeClass("anim_answerToTop");
+			$(".answerBox").prop("inert", true).attr("aria-hidden", "true");
+			$("#fillInAnswer").prop("disabled", true);
 
 			if (!showingQuestion) {
 				showQuestionPanel();
@@ -884,6 +894,8 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 							$("#answerText" + i).text(questions.questions[n].answerText[i]);
 							$("#answerBox" + i).css("opacity", 1);
 							$("#answerBox" + i).css("pointer-events", "all");
+							var canSelectAnswer = userData.answerData[n].answers.indexOf(i) == -1;
+							$("#answerBox" + i).prop("inert", !canSelectAnswer).attr("aria-hidden", !canSelectAnswer);
 						} else {
 							$("#answerText" + i).text("");
 							$("#answerBox" + i).css("opacity", 0);
@@ -899,6 +911,9 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 						}
 					}
 				}
+				$(".answerBox").filter(function () {
+					return !this.inert;
+				}).first().trigger("focus");
 			} else if (t == "fitb") {
 				$(".answerBox").css("opacity", 0);
 				$(".answerBox").css("pointer-events", "none");
@@ -906,6 +921,7 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 				$(".fillInPanel").css("pointer-events", "auto");
 				$("#fillInAnswer").css("opacity", 1);
 				$("#fillInAnswer").css("pointer-events", "auto");
+				$("#fillInAnswer").prop("disabled", false);
 				$("#fillInAnswer").removeClass("anim_quickFadeOut");
 				// Divide words into lines with line breaks
 				var words = questions.questions[n].answerText[0].split(" ");
@@ -968,7 +984,9 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 				$(".fillInPanel").css("pointer-events", "none");
 				$("#fillInAnswer").css("opacity", 1);
 				$("#fillInAnswer").css("pointer-events", "auto");
+				$("#fillInAnswer").prop("disabled", false);
 				$("#fillInAnswer").removeClass("anim_quickFadeOut");
+				$("#fillInAnswer").focus();
 				$("#questionText").addClass("srFix");
 			}
 		}
@@ -1049,17 +1067,39 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 	function showQuestionPanel() {	// Called by 1 function: setQuestion()
 		$(".answerBox div").css({"pointer-events":"all"});
 		$('#quizBank').show();	//	Tony
+		$("#questionBoxContents").prop("inert", false);
 		disableClicks=false;
 		showingQuestion = true;
 		//$("#questionBox").show(500);
 		$("#questionBox").removeClass("anim_questionBoxHide");
 		$("#questionBox").addClass("anim_questionBoxShow");
 		$("#videoBox").removeClass("anim_unblurVideo");
-		$("#videoBox").addClass("anim_blurVideo");
+		$("#videoBox").addClass("anim_unblurVideo");
+		$("#videoPlayPause").trigger("focus");
 	}
 
-	function hideQuestionPanel() {	// Called by 5 functions: questionReview(), questionContinue(), playVideo(), vidSeek() & hideQuestions()
+	function hideQuestionPanel() {	// Called by questionReview(), questionContinue(), playVideo(), vidSeek() & hideQuestions()
+		$(".answerBox div").css({"pointer-events":"none"});
+		$("#questionBoxContents").prop("inert", true);
+		$('#quizBank').hide();
+		maximizeQuestionPanel();
+		disableClicks = true;
+		showingQuestion = false;
+		$("#questionBox").removeClass("anim_questionBoxShow");
+		$("#questionBox").addClass("anim_questionBoxHide");
+		$("#fillInAnswer").val("").prop("disabled", true);
+		clearInterval(letterFlipInterval);
+		$(".anim_letterPanelSpin").removeClass("anim_letterPanelSpin");
+		setTimeout(function () {
+				disableClicks = false;
+				}, 250);
+		$("#videoBox").removeClass("anim_blurVideo");
+		$("#videoBox").addClass("anim_unblurVideo");
+	}
+
+	function minimizeQuestionPanel() { // Called by 1 function: loadButtons()
 		$(".answerBox div").css({"pointer-events":"none"});	
+		$("#questionBoxContents").prop("inert", true);
 		$('#quizBank').hide();	//	Tony
 		maximizeQuestionPanel();
 		disableClicks = true;
@@ -1085,10 +1125,12 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 		$("#videoBox").addClass("anim_unblurVideo");
 		$("#smallQuestionBox").removeClass("anim_hideSmallQuestionBox");
 		$("#smallQuestionBox").addClass("anim_showSmallQuestionBox");
+		focusAfterAnimation("#showQuestionButton", 150);
 	}
 
-	function maximizeQuestionPanel() {	// Called by 2 functions: loadButtons() & hideQuestionPanel()
+	function maximizeQuestionPanel() { // Called by 2 functions: loadButtons() & hideQuestionPanel()
 		$("#questionBoxContents").removeClass("anim_minimizeQuestionBox");
+		$("#questionBoxContents").prop("inert", false);
 		$("#questionBoxContents").addClass("anim_maximizeQuestionBox");
 		$("#videoBox").removeClass("anim_unblurVideo");
 		$("#videoBox").addClass("anim_blurVideo");
@@ -1115,6 +1157,9 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 			$("#buttonBank").append("<div id='questionButton" + i + "' class='questionButton' role='button' tabindex='0' aria-label='Question " + (i + 1) + "'></div>");
 			$("#questionButton" + i).append("<div id='questionButtonText" + i + "' class='questionButtonText text fs-30' aria-hidden='true'>" + (i + 1) + "</div>");
 			$("#questionButton" + i).append("<div id='questionButtonIcon" + i + "' class='questionButtonIcon' role='img' aria-hidden='true'></div>");
+			if (userData.answerData[i].correct) {
+				$("#questionButton" + i).prop("inert", true);
+			}
 			$("#questionButton" + i).css("left", (50.9375 - 2.5 * qCount + 5 * i) + "%");
 			initQuestionClickEvent(i);
 			// Question marker on the timeline
@@ -1125,9 +1170,7 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 	}
 
 	function initQuestionClickEvent(i) {	// Called by 1 function: makeQuestionButtons()
-		$("#questionButton" + i).on("click keydown", function (e) {
-			if (e.type === "keydown" && e.key !== "Enter" && e.key !== " ") return;
-			if (e.type === "keydown" && e.key === " ") e.preventDefault();
+		$("#questionButton" + i).on("click", function () {
 				if (!userData.answerData[i].correct && !disableClicks) {
 				setQuestion(i);
 				recordTimeWatched();
@@ -1440,6 +1483,7 @@ function inframe () {
 }
 function showQuestions() {	// Called by 1 function: loadButtons()
 	showingQuestions = true;
+	$("#buttonBank").prop("inert", false);
 	$("#toggleQuestionButton").removeClass("anim_toggleQuestionsOff");
 	$("#toggleQuestionButton").addClass("anim_toggleQuestionsOn");
 	$("#questionMarkers").removeClass("anim_hideQuestionMarkers");
@@ -1450,6 +1494,7 @@ function showQuestions() {	// Called by 1 function: loadButtons()
 
 function hideQuestions() {	// Called by 1 function: loadButtons()
 	showingQuestions = false;
+	$("#buttonBank").prop("inert", true);
 	$("#toggleQuestionButton").removeClass("anim_toggleQuestionsOn");
 	$("#toggleQuestionButton").addClass("anim_toggleQuestionsOff");
 	$("#questionMarkers").removeClass("anim_showQuestionMarkers");
@@ -1462,6 +1507,15 @@ function hideQuestions() {	// Called by 1 function: loadButtons()
 			playPause();
 		}
 	}
+}
+
+function focusAfterAnimation(selector, delay) {
+	var previouslyFocused = document.activeElement;
+	setTimeout(function () {
+		if (document.activeElement === previouslyFocused) {
+			$(selector).trigger("focus");
+		}
+	}, delay);
 }
 
 function setupAccessibility() {
@@ -1481,6 +1535,16 @@ function setupAccessibility() {
     $("#muteButton").attr({ "role": "button", "tabindex": "0", "aria-label": "Mute or Unmute Audio" });
     $("#cc").attr({ "role": "button", "tabindex": "0", "aria-label": "Toggle Closed Captions" });
     $("#bigPlay").attr({ "role": "button", "tabindex": "0", "aria-label": "Play Video" });
+	$("#fullScreenButton").attr({ "role": "button", "tabindex": "0", "aria-label": "Toggle Full Screen" });
+	$("#expoButtonReview").attr({ "role": "button", "tabindex": "0", "aria-label": "Review this section" });
+	$("#expoButtonRetry").attr({ "role": "button", "tabindex": "0", "aria-label": "Retry this question" });
+	$("#expoButtonContinue").attr({ "role": "button", "tabindex": "0", "aria-label": "Continue video" });
+	$("#toggleQuestionButton").attr({ "role": "button", "tabindex": "0", "aria-label": "Show or hide question navigation" });
+	$("#hideQuestionButton").attr({ "role": "button", "tabindex": "0", "aria-label": "Minimize question panel" });
+	$("#showQuestionButton").attr({ "role": "button", "tabindex": "0", "aria-label": "Restore question panel" });
+	$("#resetQuestionButton").attr({ "role": "button", "tabindex": "0", "aria-label": "Reset quiz" });
+	$("#buttonBank").prop("inert", !showingQuestions);
+	$("#fillInAnswer").prop("disabled", true);
     
     // Sliders
     $("#seekSlider").attr("aria-label", "Video Position");
