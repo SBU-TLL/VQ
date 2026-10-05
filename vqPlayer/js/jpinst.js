@@ -1154,7 +1154,8 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 			answerData.push(questionAnswerData);
 
 			// Question button
-			$("#buttonBank").append("<div id='questionButton" + i + "' class='questionButton' role='button' tabindex='0' aria-label='Question " + (i + 1) + "'></div>");
+			var shortcutLabel = i < 9 ? ", press " + (i + 1) + " to open" : "";
+			$("#buttonBank").append("<div id='questionButton" + i + "' class='questionButton' role='button' tabindex='-1' aria-label='Question " + (i + 1) + shortcutLabel + "'></div>");
 			$("#questionButton" + i).append("<div id='questionButtonText" + i + "' class='questionButtonText text fs-30' aria-hidden='true'>" + (i + 1) + "</div>");
 			$("#questionButton" + i).append("<div id='questionButtonIcon" + i + "' class='questionButtonIcon' role='img' aria-hidden='true'></div>");
 			if (userData.answerData[i].correct) {
@@ -1555,6 +1556,20 @@ function setupAccessibility() {
         if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             $(this).click();
+        }
+    });
+
+    $(document).on("keydown", function(e) {
+        if (!/^[1-9]$/.test(e.key) || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey ||
+                !showingQuestions || disableClicks ||
+                $(e.target).closest("input, textarea, select, [contenteditable='true']").length) {
+            return;
+        }
+
+        var questionButton = $("#questionButton" + (Number(e.key) - 1));
+        if (questionButton.length && !questionButton.prop("inert")) {
+            e.preventDefault();
+            questionButton.trigger("click");
         }
     });
 }
