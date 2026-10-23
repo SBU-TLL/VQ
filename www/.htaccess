@@ -21,7 +21,11 @@ RewriteCond %{ENV:REDIRECT_STATUS} 200
 RewriteRule ^ - [L]
 RewriteRule ^/?index.php$ - [L]
 RewriteRule ^/?index.html$ - [L]
-RewriteRule ^/?$ - [L]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
 RewriteCond %{REQUEST_URI} !.*users.*
 RewriteCond %{REQUEST_URI} !.*vqEdit.*
 RewriteCond %{REQUEST_URI} !.*vqLib.*
@@ -30,6 +34,15 @@ RewriteCond %{REQUEST_URI} !.*vqAPI.*
 RewriteCond %{REQUEST_URI} !.*vqFolder.*
 
 RewriteRule (.*) %{ENV:CWD}users/$1 [NC,L]
+# RewriteRule ^/?$ - [L]
+# RewriteCond %{REQUEST_URI} !.*users.*
+# RewriteCond %{REQUEST_URI} !.*vqEdit.*
+# RewriteCond %{REQUEST_URI} !.*vqLib.*
+# RewriteCond %{REQUEST_URI} !.*vqPlayer.*
+# RewriteCond %{REQUEST_URI} !.*vqAPI.*
+# RewriteCond %{REQUEST_URI} !.*vqFolder.*
+
+# RewriteRule (.*) %{ENV:CWD}users/$1 [NC,L]
 
   #php_value error_log PHP_errors.log
   #php_value upload_max_filesize 2000M
