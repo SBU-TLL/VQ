@@ -1362,12 +1362,14 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 	function saveWatchData() {	// Called by 3 functions: selectAnswer(), seekTimeUpdate() & videoEnded()
 
 		if(userData){
-
+				console.log(userData);
 
 			saveLocalData();
 			if(typeof ses !== 'undefined' && userData.bestScore){
 				ses.grade= (userData.bestScore)/2000;
 				postLTI(ses,userData.netID).then((result)=>{
+						console.log("Posting LTI...");
+					
 						var text=`Score:${userData.bestScore}<br>User:${userData.netID}`;
 						if (!result.match(/success/g)){
 						text=`<div style="color:red">Error submitting to Grade!</div>`;
