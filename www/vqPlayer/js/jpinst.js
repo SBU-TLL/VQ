@@ -1418,6 +1418,7 @@ function checkFinished() {	// Called by 2 functions: loadButtons() & answerCorre
 	function saveData(str) {// Called by 2 functions: saveWatchData() & saveUserData()
 	if( Date.now() - lastWatched >300000) //5 minutes
 {
+	console.log("reloading outdated..");
 location.reload();
 }	
 else  {
@@ -1432,6 +1433,8 @@ data: {
 success: function (data) {
 console.log({data});
 if(data.includes("error_")){
+	console.log("error saving user data..reloading..");
+	console.log(jqXHR, textStatus, errorThrown)
 location.reload();
 }
 },
