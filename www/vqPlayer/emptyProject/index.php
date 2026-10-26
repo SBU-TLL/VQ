@@ -26,7 +26,7 @@ else if(isset($_SESSION['mail'])){
 //                 $target = "https://${server}${_SERVER['REQUEST_URI']}";
 // header("Location: /shib/?shibtarget=$target");        
 // }
-}
+// }
 
 ?>
 <!DOCTYPE html>
