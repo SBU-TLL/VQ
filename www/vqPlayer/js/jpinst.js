@@ -135,10 +135,17 @@ userData.responses = {};
 if (userData.dataVersion != 1) {
 	userData.dataVersion = 1;
 }
+
+console.log("loading userData...");
 loadUserData();
+console.log("loading buttons...");
 loadButtons();
+console.log("updating score...");
 updateScore();
+console.log("saving watch data...");
 saveWatchData();
+
+console.log("done getting user data fn");
 }
 });
 }
