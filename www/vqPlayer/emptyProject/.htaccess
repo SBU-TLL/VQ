@@ -1,8 +1,8 @@
-SetEnv PHP_VALUE "session.save_path = /home/tltsecure/apache2/htdocs/userData/sessionData"
+SetEnv PHP_VALUE "session.save_path = /data/apps/sessionData"
 <IfModule mod_headers.c>
    Header set P3P "policyref=\"/w3c/p3p.xml\", CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\""
  </IfModule>
-#php_admin_value session.save_path "/home/tltsecure/apache2/htdocs/userData/sessionData"
+#php_admin_value session.save_path "/data/apps/sessionData"
 AuthType shibboleth
 #ShibRequestSetting requireSession true 
 #require valid-user
