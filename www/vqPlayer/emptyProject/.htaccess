@@ -3,8 +3,13 @@ SetEnv PHP_VALUE "session.save_path = /data/apps/sessionData"
    Header set P3P "policyref=\"/w3c/p3p.xml\", CP=\"IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT\""
  </IfModule>
 #php_admin_value session.save_path "/data/apps/sessionData"
+# AuthType shibboleth
+# #ShibRequestSetting requireSession true 
+# #require valid-user
+# ShibRequestSetting requireSession false
+# require shibboleth
+
+
 AuthType shibboleth
-#ShibRequestSetting requireSession true 
-#require valid-user
-ShibRequestSetting requireSession false
-require shibboleth
+ShibRequestSetting requireSession true
+require valid-user
