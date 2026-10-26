@@ -20,13 +20,13 @@ EOT;
 #else if(array_key_exists("mail",$_SESSION)){
 else if(isset($_SESSION['mail'])){
 }
-else{
-        if (!isset($_SERVER['cn']) && file_exists(".htaccess")){
-                $server= $_SERVER['SERVER_NAME'];
-                $target = "https://${server}${_SERVER['REQUEST_URI']}";
-                header("Location: /shib/?shibtarget=$target");        
-        }
-}
+// else{
+//         if (!isset($_SERVER['cn']) && file_exists(".htaccess")){
+//                 $server= $_SERVER['SERVER_NAME'];
+//                 $target = "https://${server}${_SERVER['REQUEST_URI']}";
+//                 header("Location: /shib/?shibtarget=$target");        
+//         }
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
