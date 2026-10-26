@@ -108,7 +108,13 @@ function getUserData() {	// Called by 1 function: getPermissions()
 	$.ajax({
 dataType: "json",
 url: "loadUserData.php",
-error:function(){ location.reload() },
+error: function(jqXHR, textStatus, errorThrown) {
+            console.error("AJAX Error Details:");
+            console.error("Status Code :", jqXHR.status);
+            console.error("Status Text :", textStatus);
+            console.error("Error Thrown:", errorThrown);
+            console.error("Raw Response:\n", jqXHR.responseText);
+        },
 success: function (data) {
 console.log(data)
 if (Object.keys(data).length > 0) {

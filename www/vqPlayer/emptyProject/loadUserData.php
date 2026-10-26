@@ -3,7 +3,7 @@ session_start();
 // Get netID
 clearstatcache();
 $netID = $_SESSION['mail'] ?? $_SERVER['mail'];
-if ($netID=="") $netID= "japalmeri";
+if ($netID=="") $netID= "unknown";
 // Make directory for that netID if it does not exist already
 $dataPath="./data/" . $netID;
 if(file_exists($dataPath))
