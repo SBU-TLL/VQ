@@ -1,0 +1,25 @@
+name: shibboleth-auth
+repository: /home/rich/tll/ddev-addon-shibboleth-auth
+version: ""
+install_date: "2026-11-06T16:27:48-05:00"
+project_files:
+    - config.shibboleth-auth.yaml
+    - docker-compose.shib-idp.yaml
+    - web-build/Dockerfile.shibboleth-auth
+    - web-build/shibboleth-auth-apache.conf
+    - shib/shibboleth2.xml.tpl
+    - shib/attribute-map.xml
+    - shib/attribute-policy.xml
+    - shib/shibd-wrapper.sh
+    - shib/post-start-reload.sh
+    - shib-idp/Dockerfile
+    - shib-idp/entrypoint.sh
+    - shib-idp/config/build-config.php
+    - shib-idp/config/config-overrides.php
+    - shib-idp/config/authsources.php
+    - shib-idp/config/users-base.php
+    - shib-idp/config/users-app.php.example
+    - shib-idp/metadata/saml20-idp-hosted.php
+    - shib-idp/metadata/saml20-sp-remote.php.tpl
+global_files: []
+removal_actions: []

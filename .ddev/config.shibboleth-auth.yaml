@@ -1,0 +1,22 @@
+#ddev-generated
+# DDEV-only Shibboleth auth for local development. Never deployed.
+#
+# Runs the REAL production auth path locally: mod_shib + shibd in the web
+# container (installed via .ddev/web-build/Dockerfile.shibboleth-auth) against
+# the bundled test IdP container (.ddev/docker-compose.shib-idp.yaml).
+# No mock code, no APP_ENV gate, no app-code changes: the app's own .htaccess
+# Shibboleth directives are enforced exactly as in production, and identity
+# arrives in $_SERVER (eppn/cn/mail/nickname/sn/...) from mod_shib itself.
+#
+# Test users (IdP login form): student/studentpass, ta/tapass,
+# professor/professorpass, admin/adminpass — see .ddev/shib-idp/config/.
+# To switch users: visit /Shibboleth.sso/Logout, then log in again.
+
+web_extra_daemons:
+  - name: "shibd"
+    command: "bash /mnt/ddev_config/shib/shibd-wrapper.sh"
+    directory: /var/www/html
+
+hooks:
+  post-start:
+    - exec: "bash /mnt/ddev_config/shib/post-start-reload.sh"

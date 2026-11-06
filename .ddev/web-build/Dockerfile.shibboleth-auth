@@ -1,0 +1,19 @@
+#ddev-generated
+# DDEV-only: install the real Shibboleth SP (mod_shib + shibd) into the local
+# web container so the app runs the same auth code path as production Apache.
+# Never deployed: lives under .ddev/, and production builds its own images.
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+       libapache2-mod-shib shibboleth-sp-utils gettext-base \
+    && rm -rf /var/lib/apt/lists/* \
+    && a2enmod shib
+
+# Keep a valid (package-default) shibboleth2.xml so Apache can boot before the
+# project-specific config is rendered at container start by shibd-wrapper.sh.
+RUN test -f /etc/shibboleth/shibboleth2.xml || cp /etc/shibboleth/example-shibboleth2.xml /etc/shibboleth/shibboleth2.xml
+
+# The shibd daemon + config rendering run as the DDEV web user, not root.
+RUN mkdir -p /var/log/shibboleth /var/cache/shibboleth /tmp/shibd \
+    && chmod -R 0777 /etc/shibboleth /var/log/shibboleth /var/cache/shibboleth /tmp/shibd
+
+COPY shibboleth-auth-apache.conf /etc/apache2/conf-enabled/zzz-shibboleth-auth.conf

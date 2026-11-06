@@ -1,6 +1,6 @@
-name: VQ
+name: vq-zijun
 type: php
-docroot: ""
+docroot: "www"
 php_version: "8.3"
 webserver_type: apache-fpm
 xdebug_enabled: false

@@ -1,0 +1,22 @@
+#ddev-generated
+# DDEV-only bundled test SAML IdP for local Shibboleth logins.
+# Starts automatically with `ddev start` (like DDEV's own db container);
+# reachable in the browser at https://<project>.ddev.site:8999/simplesaml/
+# and from the web container at http://shib-idp/simplesaml/.
+services:
+  shib-idp:
+    container_name: "ddev-${DDEV_SITENAME}-shib-idp"
+    build:
+      context: ./shib-idp
+    restart: "no"
+    expose:
+      - "80"
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: ${DDEV_APPROOT}
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTP_EXPOSE=8998:80
+      - HTTPS_EXPOSE=8999:80
+      - SP_HOSTNAME=${DDEV_HOSTNAME}
+      - IDP_BASEURL=https://${DDEV_HOSTNAME}:8999/simplesaml/
