@@ -1,4 +1,4 @@
-name: vq
+name: vq-master
 type: php
 docroot: "www"
 php_version: "8.3"

@@ -1435,7 +1435,7 @@ console.log({data});
 if(data.includes("error_")){
 	console.log("error saving user data..reloading..");
 	console.log(data);
-location.reload();
+//location.reload();
 }
 },
 error: function (jqXHR, textStatus, errorThrown) {

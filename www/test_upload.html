@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chunked Upload POC</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; }
+    #progress-container { width: 100%; background: #eee; border-radius: 4px; margin: 20px 0; display: none; }
+    #progress-bar { width: 0%; height: 24px; background: #0070f3; border-radius: 4px; text-align: center; color: white; line-height: 24px; font-size: 12px; }
+    #log { white-space: pre-wrap; background: #1e1e1e; color: #d4d4d4; padding: 12px; border-radius: 4px; font-size: 13px; max-height: 300px; overflow-y: auto; }
+    button { padding: 8px 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h2>Chunked Upload Test</h2>
+  <p>Select a 200MB+ file to verify slicing past Cloudflare/Proxy boundaries.</p>
+
+  <input type="file" id="fileInput" />
+  <button id="uploadBtn" onclick="startChunkedUpload()">Upload</button>
+
+  <div id="progress-container">
+    <div id="progress-bar">0%</div>
+  </div>
+
+  <div id="log">Waiting for file...</div>
+
+  <script>
+    const CHUNK_SIZE = 10 * 1024 * 1024; // 10 MB per chunk
+
+    function log(message) {
+      const logBox = document.getElementById('log');
+      logBox.textContent += `\n${message}`;
+      logBox.scrollTop = logBox.scrollHeight;
+    }
+
+    async function startChunkedUpload() {
+      const input = document.getElementById('fileInput');
+      if (!input.files.length) {
+        alert('Please choose a file first.');
+        return;
+      }
+
+      const file = input.files[0];
+      const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+      const fileId = 'upload_' + Date.now() + '_' + Math.random().toString(36).substring(2, 8);
+
+      const progressContainer = document.getElementById('progress-container');
+      const progressBar = document.getElementById('progress-bar');
+      document.getElementById('uploadBtn').disabled = true;
+      progressContainer.style.display = 'block';
+
+      log(`Selected: ${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)`);
+      log(`Total chunks: ${totalChunks} (~10 MB each)`);
+
+      for (let i = 0; i < totalChunks; i++) {
+        const start = i * CHUNK_SIZE;
+        const end = Math.min(start + CHUNK_SIZE, file.size);
+        const chunk = file.slice(start, end);
+
+        const formData = new FormData();
+        formData.append('file_chunk', chunk);
+        formData.append('file_id', fileId);
+        formData.append('file_name', file.name);
+        formData.append('chunk_index', i);
+        formData.append('total_chunks', totalChunks);
+
+        try {
+          const response = await fetch('upload_chunk.php', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status} on chunk ${i + 1}`);
+          }
+
+          const result = await response.json();
+          const percent = Math.round(((i + 1) / totalChunks) * 100);
+          progressBar.style.width = percent + '%';
+          progressBar.textContent = percent + '%';
+
+          log(`Uploaded chunk ${i + 1} of ${totalChunks}`);
+
+          if (result.status === 'complete') {
+            log(`\nSUCCESS: ${result.message}`);
+            log(`File saved on server at: ${result.saved_to}`);
+            log(`Final size: ${(result.final_size / (1024 * 1024)).toFixed(2)} MB`);
+          }
+        } catch (err) {
+          log(`\nERROR: ${err.message}`);
+          document.getElementById('uploadBtn').disabled = false;
+          return;
+        }
+      }
+
+      document.getElementById('uploadBtn').disabled = false;
+    }
+  </script>
+</body>
+</html>

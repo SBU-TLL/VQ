@@ -1,0 +1,17 @@
+<!-- #ddev-generated -->
+<Attributes xmlns="urn:mace:shibboleth:2.0:attribute-map"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <!--
+      DDEV-only attribute map: the bundled test IdP releases attributes with
+      plain ("basic") names; map them to the same environment variable names
+      SBU production mod_shib exposes to the apps ($_SERVER['cn'], eppn, ...).
+    -->
+    <Attribute name="cn"          nameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" id="cn"/>
+    <Attribute name="eppn"        nameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" id="eppn"/>
+    <Attribute name="mail"        nameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" id="mail"/>
+    <Attribute name="givenName"   nameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" id="givenName"/>
+    <Attribute name="nickname"    nameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" id="nickname"/>
+    <Attribute name="sn"          nameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" id="sn"/>
+    <Attribute name="displayName" nameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" id="displayName"/>
+    <Attribute name="affiliation" nameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:basic" id="affiliation"/>
+</Attributes>
